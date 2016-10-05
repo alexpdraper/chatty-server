@@ -1,1 +1,3 @@
-# Chatty Server\nA Web Socket Server for a chat app
+# Chatty Server
+
+A Web Socket Server for a chat app

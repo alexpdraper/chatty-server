@@ -1,3 +1,4 @@
-# Chatty Server
+Chatty Server
+===================
 
-A Web Socket Server for a chat app
+A Web Socket Server for the [Chatty App](https://github.com/alexpdraper/chatty-app).

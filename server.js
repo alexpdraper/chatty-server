@@ -40,7 +40,7 @@ wss.on('connection', (ws) => {
     parsedMessage.id = uuid.v1();
     switch(parsedMessage.type) {
       case 'message':
-        if (/^col(o|ou)rize/i.test(parsedMessage.content)) {
+        if (/^colou?rize/i.test(parsedMessage.content)) {
           ws.send(JSON.stringify({type: 'setColor', color: randomColor()}));
         } else {
           console.log(`User ${parsedMessage.username} said ${parsedMessage.content}`);

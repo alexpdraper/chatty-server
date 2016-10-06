@@ -1,5 +1,6 @@
 // server.js
 const uuid = require('node-uuid');
+const randomColor = require('randomcolor');
 const express = require('express');
 const SocketServer = require('ws').Server;
 
@@ -32,13 +33,19 @@ wss.on('connection', (ws) => {
 
   wss.broadcast(JSON.stringify({type: 'usercount', numUsers: ++numUsers}));
 
+  ws.send(JSON.stringify({type: 'setColor', color: randomColor()}));
+
   ws.on('message', (message) => {
     const parsedMessage = JSON.parse(message);
     parsedMessage.id = uuid.v1();
     switch(parsedMessage.type) {
       case 'message':
-        console.log(`User ${parsedMessage.username} said ${parsedMessage.content}`);
-        wss.broadcast(JSON.stringify(parsedMessage));
+        if (/^col(o|ou)rize/i.test(parsedMessage.content)) {
+          ws.send(JSON.stringify({type: 'setColor', color: randomColor()}));
+        } else {
+          console.log(`User ${parsedMessage.username} said ${parsedMessage.content}`);
+          wss.broadcast(JSON.stringify(parsedMessage));
+        }
         break;
       case 'notification':
         console.log(`Notification: ${parsedMessage.content}`);
